@@ -15,7 +15,7 @@
 
 body {
     background: var(--dark-bg);
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Balthazar', sans-serif;
     min-height: 100vh;
     color: #ffffff;
 }
@@ -237,7 +237,7 @@ header.header img {
     border-radius: 5px;
     font-size: 1.5rem;
     cursor: pointer;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Balthazar', sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     transition: all 0.3s ease;
