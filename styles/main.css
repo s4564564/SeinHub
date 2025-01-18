@@ -54,7 +54,6 @@ header.header img {
     justify-content: center;
     align-items: center;
     padding: 4rem 2rem;
-    background: #000;
     position: relative;
     overflow: hidden;
     padding-top: 6rem;
@@ -145,7 +144,6 @@ header.header img {
 
 .games-section {
     padding: 4rem 2rem;
-    background: #000;
 }
 
 .section-title {
