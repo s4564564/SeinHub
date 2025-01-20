@@ -73,6 +73,82 @@
             100% { transform: rotate(360deg); }
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: scaleIn 0.3s ease-out;
+            border: 1px solid #333;
+        }
+
+        .modal-title {
+            color: white;
+            font-family: 'Balthazar', serif;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .payment-button {
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+            color: white;
+            cursor: pointer;
+            font-family: 'Balthazar', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-button:hover {
+            background-color: #3a3a3a;
+            transform: translateY(-2px);
+        }
+
+        .payment-button i {
+            font-size: 1.2em;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #666;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
         .navbar {
             animation: fadeIn 0.8s ease-out;
         }
@@ -162,23 +238,16 @@
             <div class="nav-links">
                 <a href="#" class="nav-link">Home</a>
                 <a href="#support" class="nav-link">Support</a>
-                <div class="dropdown">
-                    <a href="#purchase" class="nav-link">Purchase</a>
-                    <div class="dropdown-content">
-                        <a href="#" class="dropdown-option" data-sellix-product="678a919a40687">
-                            <i class="fab fa-paypal"></i> PayPal
-                        </a>
-                        <a href="https://www.roblox.com/catalog/112045648677206/Whitelist" class="dropdown-option">
-                            <i class="fas fa-coins"></i> Robux
-                        </a>
-                    </div>
-                </div>
+                <a href="#" class="nav-link" id="navPurchaseBtn">Purchase</a>
                 <a href="https://discord.gg/seinhub" class="nav-link" target="_blank">Discord</a>
+                <a href="#supported-games" class="nav-link">SUPPORTED GAMES</a>
                 <a href="https://www.youtube.com/@SynnH" class="nav-link" target="_blank">Youtube</a>
             </div>
         </div>
     </nav>
+
     <div id="particles-js"></div>
+
     <div class="content">
         <div class="hero-section">
             <div class="container">
@@ -187,17 +256,13 @@
                 </header>
                 <h1 class="title">SEIN HUB</h1>
                 <p class="description">Premium Roblox Script Hub</p>
-                <button 
-                    class="purchase-button"
-                    data-sellix-product="678a919a40687"
-                    type="submit"
-                >
+                <button class="purchase-button" id="purchaseBtn">
                     PURCHASE
                 </button>
             </div>
         </div>
 
-        <div class="games-section">
+        <div id="supported-games" class="games-section">
             <h2 class="section-title">Supported Games</h2>
             <div class="games-grid">
                 <div class="game-card">
@@ -261,6 +326,23 @@
         </div>
     </div>
 
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Choose Your Payment Method</h2>
+            <div class="payment-options">
+                <button class="payment-button" data-sellix-product="678a919a40687">
+                    <i class="fab fa-paypal"></i>
+                    PayPal
+                </button>
+                <button class="payment-button" id="robuxButton">
+                    <i class="fas fa-coins"></i>
+                    Robux
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.sellix.io/static/js/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
@@ -271,6 +353,34 @@
             setTimeout(() => {
                 loader.style.display = 'none';
             }, 500);
+        });
+
+        const modal = document.getElementById('paymentModal');
+        const purchaseBtn = document.getElementById('purchaseBtn');
+        const navPurchaseBtn = document.getElementById('navPurchaseBtn');
+        const closeBtn = document.querySelector('.close-modal');
+        const robuxBtn = document.getElementById('robuxButton');
+
+        function openModal() {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        purchaseBtn.addEventListener('click', openModal);
+        navPurchaseBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+
+        robuxBtn.addEventListener('click', () => {
+            window.location.href = 'https://www.roblox.com/catalog/112045648677206/Whitelist';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
         });
 
         function revealOnScroll() {
