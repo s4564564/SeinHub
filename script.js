@@ -1,0 +1,334 @@
+document.addEventListener('DOMContentLoaded', function() {
+    
+    if (window.particlesJS && document.getElementById('particles-js')) {
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 120,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: ['#888888', '#aaaaaa', '#999999']
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.9,
+                    random: false,
+                    anim: {
+                        enable: true,
+                        speed: 1.5,
+                        opacity_min: 0.5,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 4,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 3,
+                        size_min: 1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 140,
+                    color: '#888888',
+                    opacity: 0.7,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 5,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+        
+        console.log('Particles.js initialized successfully!');
+    } else {
+        console.log('Particles.js not found or particles-js element missing');
+    }
+    
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.style.background = 'rgba(20, 20, 20, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(255,255,255,0.1)';
+        } else {
+            navbar.style.background = 'rgba(20, 20, 20, 0.95)';
+            navbar.style.boxShadow = 'none';
+        }
+    });
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        if (!section.classList.contains('hero')) {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'all 0.8s ease-out';
+            observer.observe(section);
+        }
+    });
+
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    portfolioItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px)';
+            this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.1)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+    });
+
+    const videoItems = document.querySelectorAll('.video-item');
+    videoItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const thumbnail = this.querySelector('.video-thumbnail img');
+            if (thumbnail) {
+                thumbnail.style.transform = 'scale(1.05)';
+                thumbnail.style.transition = 'transform 0.3s ease';
+            }
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            const thumbnail = this.querySelector('.video-thumbnail img');
+            if (thumbnail) {
+                thumbnail.style.transform = 'scale(1)';
+            }
+        });
+    });
+
+    // Contact links subtle effects
+    const contactLinks = document.querySelectorAll('.contact-link');
+    contactLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+
+    // Simple loading animation
+    window.addEventListener('load', function() {
+        document.body.style.opacity = '1';
+        document.body.style.transition = 'opacity 0.5s ease-in';
+    });
+
+    // Initialize body opacity for loading animation
+    document.body.style.opacity = '0';
+
+    // Add a subtle parallax effect to the hero image
+    const heroImage = document.querySelector('.hero-image img');
+    if (heroImage) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            heroImage.style.transform = `translateY(${parallax}px)`;
+        });
+    }
+
+    // Enhanced Portfolio Card Interactions
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    const portfolioTrack = document.querySelector('.portfolio-scroll-track');
+    
+    portfolioCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            // Pause the animation when hovering over any card
+            if (portfolioTrack) {
+                portfolioTrack.style.animationPlayState = 'paused';
+            }
+            
+            this.style.transform = 'translateY(-8px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            // Resume the animation when not hovering
+            if (portfolioTrack) {
+                portfolioTrack.style.animationPlayState = 'running';
+            }
+            
+            this.style.transform = 'translateY(0)';
+        });
+
+        card.addEventListener('click', function() {
+            this.style.transform = 'translateY(-5px) scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = 'translateY(-8px) scale(1)';
+            }, 150);
+        });
+    });
+
+    // Pause scroll animation when hovering over the entire track area
+    if (portfolioTrack) {
+        const scrollWrapper = document.querySelector('.portfolio-scroll-wrapper');
+        if (scrollWrapper) {
+            scrollWrapper.addEventListener('mouseenter', function() {
+                portfolioTrack.style.animationPlayState = 'paused';
+            });
+            
+            scrollWrapper.addEventListener('mouseleave', function() {
+                portfolioTrack.style.animationPlayState = 'running';
+            });
+        }
+    }
+
+    // Portfolio item click effects (for legacy support)
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Add a subtle click effect
+            this.style.transform = 'translateX(10px)';
+            setTimeout(() => {
+                this.style.transform = 'translateX(5px)';
+            }, 150);
+        });
+    });
+
+    // Add smooth transitions to all interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .portfolio-item, .portfolio-card, .video-item, .category-header');
+    interactiveElements.forEach(el => {
+        el.style.transition = 'all 0.3s ease';
+    });
+});
+
+// Fullscreen video function
+function toggleFullscreen(button) {
+    const videoWrapper = button.closest('.video-wrapper');
+    const video = videoWrapper.querySelector('video');
+    
+    if (!document.fullscreenElement) {
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+        } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+function smoothTransition(element, property, value, duration = 300) {
+    element.style.transition = `${property} ${duration}ms ease`;
+    element.style[property] = value;
+}
