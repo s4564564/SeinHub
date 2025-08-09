@@ -287,7 +287,7 @@ header.header img {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
 }
@@ -296,6 +296,8 @@ header.header img {
     display: flex;
     gap: 2rem;
     align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .nav-link {
