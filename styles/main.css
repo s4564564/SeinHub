@@ -756,6 +756,14 @@ body {
     transform: translateY(-5px);
 }
 
+.video-thumbnail img {
+    width: 150px;   /* ou une autre largeur qui te convient */
+    height: auto;   /* pour garder le ratio de l'image */
+    max-height: 100px; /* limite la hauteur si besoin */
+    object-fit: cover; /* pour que l'image garde un bon recadrage */
+    border-radius: 8px; /* optionnel, pour arrondir les coins */
+}
+
 .portfolio-card img {
     width: 120px;
     height: 120px;
